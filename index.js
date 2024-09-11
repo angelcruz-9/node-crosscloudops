@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const multer = require('multer');
 
 const app = express();
 const port = 5000;
@@ -10,36 +11,65 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Create a transporter object using SMTP transport
+// Configure multer for file uploads
+const upload = multer({ storage: multer.memoryStorage() });
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
-  secure: false, // true for port 465, false for other ports
+  secure: false,
   auth: {
     user: 'vijay.anand@crosscloudops.com',
-    pass: 'rbyrfwtwvqmbyfap', // Use environment variables in production
+    pass: 'rbyrfwtwvqmbyfap',
   },
 });
 
-// Endpoint to handle form submission and send email
-app.post('/send-email', async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, message } = req.body;
+app.post('/send-email', upload.single('file'), async (req, res) => {
+  const { firstName, lastName, email, phoneNumber, message, location, jobTitle } = req.body;
+  const file = req.file;
 
-  // Use the existing nodemailer configuration to send the email
-  const mailOptions = {
-    from: 'vijay.anand@crosscloudops.com',
-    to: 'ravikumarcse123@gmail.com',
-    subject: 'Contact Form Submission',
-    html: `
-      <p>You have a new contact form submission:</p>
-      <p><strong>First Name:</strong> ${firstName}</p>
-      <p><strong>Last Name:</strong> ${lastName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone Number:</strong> ${phoneNumber}</p>
-      <p><strong>Message:</strong> ${message}</p>
-    `,
-  };
+  let mailOptions;
+
+  if (file) {
+    mailOptions = {
+      from: 'vijay.anand@crosscloudops.com',
+      to: 'ravikumarcse123@gmail.com',
+      subject: 'Career Form Submission',
+      html: `
+        <p>You have a new Career form submission:</p>
+        <p><strong>First Name:</strong> ${firstName}</p>
+        <p><strong>Last Name:</strong> ${lastName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone Number:</strong> ${phoneNumber}</p>
+        <p><strong>Location:</strong> ${location}</p>
+        <p><strong>Job Title:</strong> ${jobTitle}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `,
+      attachments: [
+        {
+          filename: file.originalname,
+          content: file.buffer,
+        },
+      ],
+    };
+  } else {
+    mailOptions = {
+      from: 'vijay.anand@crosscloudops.com',
+      to: 'ravikumarcse123@gmail.com',
+      subject: 'Contact Form Submission',
+      html: `
+        <p>You have a new contact form submission:</p>
+        <p><strong>First Name:</strong> ${firstName}</p>
+        <p><strong>Last Name:</strong> ${lastName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone Number:</strong> ${phoneNumber}</p>
+        <p><strong>Message:</strong> ${message}</p>
+        <p><strong>Location:</strong> ${location}</p>
+        <p><strong>Job Title:</strong> ${jobTitle}</p>
+      `,
+    };
+  }
 
   try {
     await transporter.sendMail(mailOptions);
