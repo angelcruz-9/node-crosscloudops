@@ -3,9 +3,13 @@ const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+const fetch = require("node-fetch");
+
 
 const app = express();
 const port = 5000;
+const RECAPTCHA_SECRET_KEY = "6LdPqnwqAAAAAPaXgZPwau_zUn3fQrYJg2y3waA2"; // Replace with your Secret Key
+
 
 // Middleware to parse JSON data
 app.use(cors());
@@ -26,10 +30,18 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send-email', upload.single('file'), async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, message, location, jobTitle } = req.body;
+  const { firstName, lastName, email, phoneNumber, message, location, jobTitle, recaptchaToken } = req.body;
   const file = req.file;
 
   let mailOptions;
+
+  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+  });
+
+  const data = await response.json();
 
   if (file) {
     mailOptions = {
@@ -73,10 +85,10 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Email sent successfully' });
+    res.status(200).json({ success: true, message: 'Email sent successfully' });
   } catch (error) {
     console.error('Error sending email:', error);
-    res.status(500).json({ message: 'Failed to send email' });
+    res.status(500).json({ success: false, message: 'Failed to send email' });
   }
 });
 
