@@ -33,7 +33,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
 
   if (file) {
     mailOptions = {
-      from: gmail,
+      from: email,
       to: ['info@crosscloudops.com', 'hr@crosscloudops.com'],
       subject: 'Career Form Submission',
       html: `
@@ -55,7 +55,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
     };
   } else {
     mailOptions = {
-      from: gmail,
+      from: email,
       to: ['info@crosscloudops.com', 'hr@crosscloudops.com'],
       subject: 'Contact Form Submission',
       html: `
