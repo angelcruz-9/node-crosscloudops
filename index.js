@@ -33,7 +33,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
 
   if (file) {
     mailOptions = {
-      from: `${firstName} ${lastName} <${email}>`,
+      from: 'vijay.anand@crosscloudops.com',
       to: ['info@crosscloudops.com', 'hr@crosscloudops.com'],
       subject: 'Career Form Submission',
       html: `
@@ -52,14 +52,11 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
           content: file.buffer,
         },
       ],
-       auth: {
-        user: 'vijay.anand@crosscloudops.com', // SMTP authenticated user
-      },
     };
   } else {
     mailOptions = {
-      from: `${firstName} ${lastName} <${email}>`,
-      to: ['info@crosscloudops.com', 'hr@crosscloudops.com'],
+      from: 'vijay.anand@crosscloudops.com',
+      to: ['info@crosscloudops.com'],
       subject: 'Contact Form Submission',
       html: `
         <p>You have a new contact form submission:</p>
@@ -71,9 +68,6 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
         <p><strong>Location:</strong> ${location}</p>
         <p><strong>Job Title:</strong> ${jobTitle}</p>
       `,
-       auth: {
-        user: 'vijay.anand@crosscloudops.com', // SMTP authenticated user
-      },
     };
   }
 
