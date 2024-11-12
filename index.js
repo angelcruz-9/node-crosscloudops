@@ -46,6 +46,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
   if (file) {
     mailOptions = {
       from: 'vijay.anand@crosscloudops.com',
+      replyTo: email,
       to: ['info@crosscloudops.com', 'hr@crosscloudops.com'],
       subject: 'Career Form Submission',
       html: `
@@ -68,6 +69,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
   } else {
     mailOptions = {
       from: 'vijay.anand@crosscloudops.com',
+      replyTo: email,
       to: ['info@crosscloudops.com'],
       subject: 'Contact Form Submission',
       html: `
