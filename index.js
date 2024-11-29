@@ -3,6 +3,8 @@ const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+const fetch = require("node-fetch");
+
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -68,7 +70,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
   } else {
     mailOptions = {
       from: 'vijay.anand@crosscloudops.com',
-      to: ['info@crosscloudops.com'],
+      to: ['info@crosscloudops.com', 'ravikumarcse123@gmail.com'],
       subject: 'Contact Form Submission',
       html: `
         <p>You have a new contact form submission:</p>
@@ -77,8 +79,6 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone Number:</strong> ${phoneNumber}</p>
         <p><strong>Message:</strong> ${message}</p>
-        <p><strong>Location:</strong> ${location}</p>
-        <p><strong>Job Title:</strong> ${jobTitle}</p>
       `,
     };
   }
