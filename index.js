@@ -30,7 +30,8 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send-email', upload.single('file'), async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, message, location, jobTitle, recaptchaToken } = req.body;
+  const { payload } = req.body;
+  const { firstName, lastName, email, phoneNumber, message, location, jobTitle, recaptchaToken } = payload;
   const file = req.file;
 
   let mailOptions;
