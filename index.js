@@ -3,8 +3,6 @@ const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
-const fetch = require("node-fetch");
-
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
