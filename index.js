@@ -69,7 +69,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
   } else {
     mailOptions = {
       from: 'vijay.anand@crosscloudops.com',
-      to: ['info@crosscloudops.com', 'ravikumarcse123@gmail.com'],
+      to: ['info@crosscloudops.com'],
       subject: 'Contact Form Submission',
       html: `
         <p>You have a new contact form submission:</p>
