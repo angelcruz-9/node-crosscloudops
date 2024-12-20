@@ -12,7 +12,9 @@ const RECAPTCHA_SECRET_KEY = "6LdPqnwqAAAAAPaXgZPwau_zUn3fQrYJg2y3waA2"; // Repl
 
 
 // Middleware to parse JSON data
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000'],
+}));
 app.use(bodyParser.json());
 
 // Configure multer for file uploads
