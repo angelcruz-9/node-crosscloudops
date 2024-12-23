@@ -13,7 +13,7 @@ const RECAPTCHA_SECRET_KEY = "6LdPqnwqAAAAAPaXgZPwau_zUn3fQrYJg2y3waA2"; // Repl
 
 // Middleware to parse JSON data
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000', "https://node-crosscloudops.onrender.com"],
 }));
 app.use(bodyParser.json());
 
@@ -92,7 +92,6 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to send email' });
   }
 });
-
 app.post('/contact-email', upload.single('file'), async (req, res) => {
   const { payload } = req.body;
   const { firstName, lastName, email, phoneNumber, message, location, jobTitle, recaptchaToken } = payload;
