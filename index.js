@@ -19,6 +19,8 @@ app.use(
       "https://node-crosscloudops.onrender.com",
       "https://www.winsoltech.com/"
     ],
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
   })
 );
 app.use(bodyParser.json());
@@ -122,7 +124,6 @@ app.post("/contact-email", upload.single("file"), async (req, res) => {
       country,
       jobTitle,
     } = req.body;
-    console.log(req.body);
     const file = req.file;
     let mailOptions;
 
