@@ -17,6 +17,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://node-crosscloudops.onrender.com",
+      "https://www.winsoltech.com/"
     ],
   })
 );
