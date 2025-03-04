@@ -19,7 +19,7 @@ app.use(
       "http://localhost:3000",
       "https://www.winsoltech.com/"
     ],
-    methods: "GET,POST,PUT,DELETE",
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
     allowedHeaders: "Content-Type,Authorization",
   })
 );
