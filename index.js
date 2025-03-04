@@ -24,6 +24,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Configure multer for file uploads
 const upload = multer({ storage: multer.memoryStorage() });
