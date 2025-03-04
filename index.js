@@ -15,8 +15,8 @@ const RECAPTCHA_SECRET_KEY = "6LdPqnwqAAAAAPaXgZPwau_zUn3fQrYJg2y3waA2"; // Repl
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
       "https://node-crosscloudops.onrender.com",
+      "http://localhost:3000",
       "https://www.winsoltech.com/"
     ],
     methods: "GET,POST,PUT,DELETE",
