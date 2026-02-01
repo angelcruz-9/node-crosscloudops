@@ -15,14 +15,16 @@ const RECAPTCHA_SECRET_KEY = "6LdPqnwqAAAAAPaXgZPwau_zUn3fQrYJg2y3waA2"; // Repl
 app.use(
   cors({
     origin: [
+      "https://www.crosscloudops.com",
       "https://node-crosscloudops.onrender.com",
       "http://localhost:3000",
       "https://www.winsoltech.com/"
     ],
-    methods: "GET,POST,PUT,DELETE,OPTIONS",
-    allowedHeaders: "Content-Type,Authorization",
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
